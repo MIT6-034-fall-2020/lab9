@@ -51,7 +51,29 @@ def get_overall_misclassifications(H, training_points, classifier_to_misclassifi
     dictionary mapping classifiers to the training points they misclassify,
     returns a set containing the training points that H misclassifies.
     H is represented as a list of (classifier, voting_power) tuples."""
-    raise NotImplementedError
+    
+    '''
+     Basically, you are looking at the sum of voting powers. 
+     You should iterate through the points and for each point, 
+     you have to see if a classifier misclassifies a point, 
+     and you subtract the voting power and if it doesn't, 
+     you add the voting power. If voting powers are less than 0, 
+     then that point is misclassfied.
+    '''
+
+    misclassified = set()
+    for point in training_points:
+        vote = 0
+        for (classifier, voting_power) in H:
+            if point in classifier_to_misclassified[classifier]:
+                vote = vote - voting_power
+            else:
+                vote = vote + voting_power
+
+        if vote <= 0:
+            misclassified.add(point)
+
+    return misclassified
 
 def is_good_enough(H, training_points, classifier_to_misclassified, mistake_tolerance=0):
     """Given an overall classifier H, a list of all training points, a
