@@ -25,8 +25,17 @@ def pick_best_classifier(classifier_to_error_rate, use_smallest_error=True):
     best* classifier, or raises NoGoodClassifiersError if best* classifier has
     error rate 1/2.  best* means 'smallest error rate' if use_smallest_error
     is True, otherwise 'error rate furthest from 1/2'."""
-    raise NotImplementedError
+    
+    if use_smallest_error:
+        best_classifier = min(classifier_to_error_rate.keys(), key=lambda x: classifier_to_error_rate[x])
+    else:
+        best_classifier = max(classifier_to_error_rate.keys(), key=lambda x: abs(make_fraction(0.5) - classifier_to_error_rate[x]))
 
+    if classifier_to_error_rate[best_classifier] != make_fraction(0.5):
+        return best_classifier
+
+    raise NoGoodClassifiersError
+    
 def calculate_voting_power(error_rate):
     """Given a classifier's error rate (a number), returns the voting power
     (aka alpha, or coefficient) for that classifier."""
