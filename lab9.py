@@ -107,8 +107,40 @@ def adaboost(training_points, classifier_to_misclassified,
     """Performs the Adaboost algorithm for up to max_rounds rounds.
     Returns the resulting overall classifier H, represented as a list of
     (classifier, voting_power) tuples."""
-    raise NotImplementedError
+    
+    """
+    1. Initialize all training points' weights.
+    2. Compute the error rate of each weak classifier.
+    3. Pick the "best" weak classifier h, by some definition of "best."
+    4. Use the error rate of h to compute the voting power for h.
+    5. Append h, along with its voting power, to the ensemble classifier H.
+    6. Update weights in preparation for the next round.
+    7. Repeat steps 2-7 until no good classifier remains, we have reached some max number of iterations, or H is "good enough."
+    """
 
+    # step 1 
+    point_to_weight = initialize_weights(training_points)
+    iterations = 0
+    H = []
+    while iterations < max_rounds:
+        # step 2
+        classifier_to_error_rate = calculate_error_rates(point_to_weight, classifier_to_misclassified)
+        #step 3
+        try:
+            best_classifier = pick_best_classifier(classifier_to_error_rate, use_smallest_error)
+            error_rate = classifier_to_error_rate[best_classifier]
+        except:
+            return H
+        # step 4-5
+        H.append((best_classifier, calculate_voting_power(error_rate)))
+        # step 6
+        if is_good_enough(H, training_points, classifier_to_misclassified, mistake_tolerance):
+            return H
+        misclassified_points = classifier_to_misclassified[best_classifier]
+        point_to_weight = update_weights(point_to_weight, misclassified_points, error_rate)
+        iterations += 1
+
+    return H
 
 #### SURVEY ####################################################################
 
