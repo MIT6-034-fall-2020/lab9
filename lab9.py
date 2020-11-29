@@ -91,7 +91,13 @@ def update_weights(point_to_weight, misclassified_points, error_rate):
     error rate of the current weak classifier, returns a dictionary mapping
     training points to their new weights.  This function is allowed (but not
     required) to modify the input dictionary point_to_weight."""
-    raise NotImplementedError
+    for point in point_to_weight:
+        if point in misclassified_points:
+            point_to_weight[point] = make_fraction(0.5) * make_fraction(1, error_rate) * point_to_weight[point]
+        else:
+            point_to_weight[point] = make_fraction(0.5) * make_fraction(1, 1 - error_rate) * point_to_weight[point]
+    return point_to_weight
+
 
 
 #### Part 2: Adaboost ##########################################################
