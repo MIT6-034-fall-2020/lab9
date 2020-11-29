@@ -35,11 +35,16 @@ def pick_best_classifier(classifier_to_error_rate, use_smallest_error=True):
         return best_classifier
 
     raise NoGoodClassifiersError
-    
+
 def calculate_voting_power(error_rate):
     """Given a classifier's error rate (a number), returns the voting power
     (aka alpha, or coefficient) for that classifier."""
-    raise NotImplementedError
+    if error_rate == 0:
+        return INF
+    if error_rate == 1:
+        return -1 * INF
+
+    return 0.5 * ln( ( (1 - error_rate) / error_rate ) )
 
 def get_overall_misclassifications(H, training_points, classifier_to_misclassified):
     """Given an overall classifier H, a list of all training points, and a
