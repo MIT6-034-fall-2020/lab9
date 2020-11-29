@@ -10,7 +10,8 @@ from utils import *
 def initialize_weights(training_points):
     """Assigns every training point a weight equal to 1/N, where N is the number
     of training points.  Returns a dictionary mapping points to weights."""
-    raise NotImplementedError
+    N = len(training_points)
+    return {i: make_fraction(1,N) for i in training_points}
 
 def calculate_error_rates(point_to_weight, classifier_to_misclassified):
     """Given a dictionary mapping training points to their weights, and another
