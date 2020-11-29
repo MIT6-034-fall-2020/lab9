@@ -11,13 +11,14 @@ def initialize_weights(training_points):
     """Assigns every training point a weight equal to 1/N, where N is the number
     of training points.  Returns a dictionary mapping points to weights."""
     N = len(training_points)
-    return {i: make_fraction(1,N) for i in training_points}
+    return {point: make_fraction(1,N) for point in training_points}
 
 def calculate_error_rates(point_to_weight, classifier_to_misclassified):
     """Given a dictionary mapping training points to their weights, and another
     dictionary mapping classifiers to the training points they misclassify,
     returns a dictionary mapping classifiers to their error rates."""
-    raise NotImplementedError
+    classifiers = classifier_to_misclassified.keys()
+    return {classifier: sum([point_to_weight[point] for point in classifier_to_misclassified[classifier]]) for classifier in classifiers}
 
 def pick_best_classifier(classifier_to_error_rate, use_smallest_error=True):
     """Given a dictionary mapping classifiers to their error rates, returns the
