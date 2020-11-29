@@ -112,9 +112,9 @@ def adaboost(training_points, classifier_to_misclassified,
 
 #### SURVEY ####################################################################
 
-NAME = None
-COLLABORATORS = None
-HOW_MANY_HOURS_THIS_LAB_TOOK = None
-WHAT_I_FOUND_INTERESTING = None
-WHAT_I_FOUND_BORING = None
-SUGGESTIONS = None
+NAME = "Nabib Ahmed"
+COLLABORATORS = "None"
+HOW_MANY_HOURS_THIS_LAB_TOOK = 3
+WHAT_I_FOUND_INTERESTING = "The modular structure"
+WHAT_I_FOUND_BORING = "Nothing"
+SUGGESTIONS = "None"
