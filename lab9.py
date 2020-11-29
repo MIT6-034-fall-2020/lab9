@@ -82,7 +82,8 @@ def is_good_enough(H, training_points, classifier_to_misclassified, mistake_tole
     returns False if H misclassifies more points than the tolerance allows,
     otherwise True.  H is represented as a list of (classifier, voting_power)
     tuples."""
-    raise NotImplementedError
+    mistakes = len(get_overall_misclassifications(H, training_points, classifier_to_misclassified))
+    return mistakes <= mistake_tolerance
 
 def update_weights(point_to_weight, misclassified_points, error_rate):
     """Given a dictionary mapping training points to their old weights, a list
